@@ -32,7 +32,7 @@ html, body, #map { height: 100%; width: 100%; }
 <script>
 var map = L.map('map').setView([0, 0], 3);
 L.tileLayer('/{z}/{x}/{y}/',
-    { maxZoom: 10, attribution: 'QGIS tile server'}).addTo(map);
+    { maxZoom: 10, attribution: '<a href="https://github.com/wonder-sk/qgis-tile-server">QGIS tile server</a>'}).addTo(map);
 </script></body></html>"""
 
 
