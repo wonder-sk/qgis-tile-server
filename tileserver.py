@@ -30,9 +30,9 @@ html, body, #map { height: 100%; width: 100%; }
 <div id="map"></div>
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script>
-var map = L.map('map').setView([31.505, -0.09], 3);
+var map = L.map('map').setView([0, 0], 3);
 L.tileLayer('/{z}/{x}/{y}/',
-    { maxZoom: 18, attribution: 'QGIS tile server'}).addTo(map);
+    { maxZoom: 10, attribution: 'QGIS tile server'}).addTo(map);
 </script></body></html>"""
 
 
@@ -89,8 +89,10 @@ def index_page():
 
 @app.route("/<int:z>/<int:x>/<int:y>/")
 def get_tile(z,x,y):
-    tile_filename = tile_path+"/%d-%d-%d.png" % (z,x,y)
+    tile_filename = tile_path+"/%d/%d/%d.png" % (z,x,y)
     if not os.path.exists(tile_filename):
+      if not os.path.exists(os.path.dirname(tile_filename)):
+        os.makedirs(os.path.dirname(tile_filename))
       make_tile(z,x,y, tile_filename)
     return Response( open(tile_filename).read(), mimetype='image/png')
 
