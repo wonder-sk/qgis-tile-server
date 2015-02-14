@@ -1,6 +1,6 @@
 # QGIS tile server
 
-This is an attempt to create a working map tile server based on QGIS map renderer for use in web maps. As a bonus, the tile server also serves home page with a map based on Leaflet. All that in about 100 lines of code!
+This is an attempt to create a working map tile server based on QGIS map renderer for use in web maps. Tiles are cached in a directory structure. As a bonus, the tile server also serves home page with a map based on Leaflet. All that in about 100 lines of code!
 
 Requirements:
 
