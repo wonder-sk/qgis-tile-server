@@ -42,14 +42,15 @@ import math, sys, os
 os.environ['QGIS_PREFIX_PATH'] = qgis_path
 sys.path.append(qgis_path+'/python')
 from qgis.core import *
-from qgis.core.contextmanagers import qgisapp
 from PyQt4.QtCore import QSize
 
-ms, ct = None, None
+qgis_app, ms, ct = None, None, None
 
 def init_rendering():
     """ load project, setup map parameters """
-    global ms, ct
+    global qgis_app, ms, ct
+    qgis_app = QgsApplication([], False, qgis_path)
+    qgis_app.initQgis()
     QgsProject.instance().setFileName(project_file)
     QgsProject.instance().read()
     ms = QgsMapSettings()
@@ -96,11 +97,12 @@ def get_tile(z,x,y):
       make_tile(z,x,y, tile_filename)
     return Response( open(tile_filename).read(), mimetype='image/png')
 
+# wipe out the tile path (if it exsits)
+if os.path.exists(tile_path):
+  import shutil; shutil.rmtree(tile_path)
+os.makedirs(tile_path)
+
+init_rendering()
+
 if __name__ == "__main__":
-  with qgisapp(guienabled=False):
-    # wipe out the tile path (if it exsits)
-    if os.path.exists(tile_path):
-      import shutil; shutil.rmtree(tile_path)
-    os.makedirs(tile_path)
-    init_rendering()
     app.run(debug=True)
