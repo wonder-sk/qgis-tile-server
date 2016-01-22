@@ -31,8 +31,14 @@ html, body, #map { height: 100%; width: 100%; }
 <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 <script>
 var map = L.map('map').setView([0, 0], 3);
-L.tileLayer('/{z}/{x}/{y}/',
-    { maxZoom: 10, attribution: '<a href="https://github.com/wonder-sk/qgis-tile-server">QGIS tile server</a>'}).addTo(map);
+var qgis = L.tileLayer('/{z}/{x}/{y}/',
+    { maxZoom: 19, attribution: '<a href="https://github.com/wonder-sk/qgis-tile-server">QGIS tile server</a>'}).addTo(map);
+var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png?');
+var baseMaps = {
+    "QGIS": qgis,
+    "OSM": osm
+};
+L.control.layers(baseMaps).addTo(map);
 </script></body></html>"""
 
 
